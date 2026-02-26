@@ -1,0 +1,95 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="Project_I2C" target="8" version="2">
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="Level 2"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 2 balanced" />
+  <project Name="Project_I2C">
+    <configuration
+      LIBRARY_IO_TYPE="RTT"
+      Name="Common"
+      Target="GD32F405RG"
+      arm_architecture="v7EM"
+      arm_compiler_variant="SEGGER"
+      arm_core_type="Cortex-M4"
+      arm_endian="Little"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_linker_heap_size="1024"
+      arm_linker_process_stack_size="0"
+      arm_linker_stack_size="2048"
+      arm_linker_variant="SEGGER"
+      arm_simulator_memory_simulation_parameter="ROM;0x08000000;0x100000;RAM;0x10000000;0x010000;RAM;0x20000000;0x020000"
+      arm_target_device_name="GD32F405RG"
+      arm_target_interface_type="SWD"
+      c_preprocessor_definitions="ARM_MATH_CM4;GD32F405;__GD32F405_SUBFAMILY;__GD32F4XX_FAMILY"
+      c_user_include_directories="$(ProjectDir)/CMSIS_5/CMSIS/Core/Include;$(ProjectDir)/GD32F4xx/Device/Include;$(ProjectDir)/GD32F4xx/Device/Include/Device/F4XX/Include"
+      debug_register_definition_file="$(ProjectDir)/GD32F4xx_Registers.xml"
+      debug_stack_pointer_start="__stack_end__"
+      debug_start_from_entry_point_symbol="Yes"
+      debug_target_connection="J-Link"
+      gcc_entry_point="Reset_Handler"
+      link_linker_script_file="$(ProjectDir)/GD32F4xx_Flash_Variant1.icf"
+      linker_memory_map_file="$(ProjectDir)/GD32F405RG_MemoryMap.xml"
+      linker_printf_fp_enabled="Double"
+      linker_scanf_character_group_matching_enabled="Yes"
+      linker_scanf_fp_enabled="Yes"
+      macros="DeviceHeaderFile=$(PackagesDir)/GD32F4xx/Device/Include/SEGGER_GD32F4xx.h;DeviceSystemFile=$(PackagesDir)/GD32F4xx/Device/Source/Device/F4XX/Source/system_gd32f4xx.c;DeviceVectorsFile=$(PackagesDir)/GD32F4xx/Source/gd32f405_425_Vectors.s;DeviceFamily=GD32F4xx;DeviceSubFamily=GD32F405;Target=GD32F405RG"
+      project_directory=""
+      project_type="Executable"
+      target_reset_script="Reset();" />
+    <folder Name="CMSIS Files">
+      <file file_name="GD32F4xx/Device/Include/SEGGER_GD32F4xx.h" />
+      <file file_name="GD32F4xx/Device/Source/Device/F4XX/Source/system_gd32f4xx.c">
+        <configuration
+          Name="Common"
+          default_code_section=".init"
+          default_const_section=".init_rodata" />
+        <configuration Name="Debug" build_exclude_from_build="Yes" />
+      </file>
+    </folder>
+    <folder Name="Script Files">
+      <file file_name="GD32F4xx/Scripts/GD32F4xx_Target.js">
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
+    <folder Name="Source Files">
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <file file_name="eeprom.h" />
+      <file file_name="eeprom_functions.c" />
+      <file file_name="gpio.h" />
+      <file file_name="gpio_functions.c" />
+      <file file_name="I2C.h" />
+      <file file_name="I2C_Functions.c" />
+      <file file_name="I2C_main.c" />
+      <file file_name="I2C_Tests.c" />
+      <file file_name="lcd.h" />
+      <file file_name="lcd_functions.c" />
+      <file file_name="led_driver.h" />
+      <file file_name="led_functions.c" />
+      <file file_name="rcu.h" />
+      <file file_name="spi.h" />
+      <file file_name="spi_functions.c" />
+      <file file_name="system_gd32f4xx.c" />
+      <file file_name="systick.h" />
+      <file file_name="systick_functions.c" />
+      <file file_name="usart.h" />
+      <file file_name="usart_functions.c" />
+    </folder>
+    <folder Name="System Files">
+      <file file_name="GD32F4xx/Source/gd32f405_425_Vectors.s">
+        <configuration Name="Common" file_type="Assembly" />
+      </file>
+      <file file_name="GD32F4xx/Source/GD32F4xx_Startup.s" />
+      <file file_name="SEGGER_THUMB_Startup.s" />
+    </folder>
+  </project>
+</solution>
