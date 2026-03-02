@@ -48,7 +48,13 @@ void i2cx_stop(i2c_t* ptr_i2cx);
 
 void i2cx_send_text(i2c_t* ptr_i2cx, const char *str);
 
+uint8_t i2cx_read_byte(i2c_t* ptr_i2cx);
+
+void i2cx_read_bytes(i2c_t* ptr_i2cx, uint8_t* buffer, uint32_t len);
+
 int dfrobot_display(uint32_t dfr_version);
+
+int tft_test(void);
 
 int i2c1_eeprom_write_read(void);
 

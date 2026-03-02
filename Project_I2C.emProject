@@ -63,6 +63,8 @@
     </folder>
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <file file_name="dfrobot_tft.c" />
+      <file file_name="dfrobot_tft.h" />
       <file file_name="eeprom.h" />
       <file file_name="eeprom_functions.c" />
       <file file_name="gpio.h" />

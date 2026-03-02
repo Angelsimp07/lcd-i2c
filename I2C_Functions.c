@@ -52,10 +52,10 @@ void i2cx_config(i2c_t* ptr_i2cx,
 
   if(scl_speed == SCL_SPEED_STD)
   {
-    clk_ctl = (uint32_t)APB1_FREQ/(1000000000*2);
+    clk_ctl = (uint32_t)APB1_FREQ/(100000 * 2);
 
     //Maximum rise tiem in standard speed is 1000 ns
-    rise_time = (uint32_t)(APB1_FREQ/1000000000 + 1);
+    rise_time = (uint32_t)(APB1_FREQ/1000000 + 1);
   }
 
   else if(scl_speed == SCL_SPEED_FAST)
@@ -152,13 +152,57 @@ void i2cx_send_text(i2c_t* ptr_i2cx, const char *str)
 {
   for(uint32_t i = 0; i < strlen(str); i++)
   {
-    delay_systick_us(25000);
-
     //Wait until the TBE flag is set
-    while(!(ptr_i2cx->STAT0 & (1 << 7)));  //While((ptr_i2cx->STAT1 & (1 << 7)) != (1 << 7));
+    while(!(ptr_i2cx->STAT0 & (1 << 7)));
 
     ptr_i2cx->DATA = str[i];
+
+    delay_systick_us(50);
   }
   //Wait until the TBE flag is set
-  while(!(ptr_i2cx->STAT0 & (1 << 7)));  //While((ptr_i2cx->STAT1 & (1 << 7)) != (1 << 7));
+  while(!(ptr_i2cx->STAT0 & (1 << 7)));
 }
+    
+    uint8_t i2cx_read_byte(i2c_t* ptr_i2cx)
+    {
+      // Clear ACK Flag
+      ptr_i2cx->CTL0 &= ~(1 << 10);
+    
+      // Send the STOP condition
+      ptr_i2cx->CTL0 |= (1 << 9);
+    
+      // Wait until the RBNE flag is set
+      while (!(ptr_i2cx->STAT0 & (1 << 6)));
+    
+      // Read the data
+      return (uint8_t)ptr_i2cx->DATA;
+    }
+    
+    void i2cx_read_bytes(i2c_t* ptr_i2cx, uint8_t* buffer, uint32_t len)
+    {
+      if (len == 1)
+      {
+        buffer[0] = i2cx_read_byte(ptr_i2cx);
+        return;
+      }
+    
+      // Enable ACK
+      ptr_i2cx->CTL0 |= (1 << 10);
+    
+      for (uint32_t i = 0; i < len; i++)
+      {
+        if (i == (len - 1))
+        {
+          // Last byte: Clear ACK and send STOP
+          ptr_i2cx->CTL0 &= ~(1 << 10);
+          ptr_i2cx->CTL0 |= (1 << 9);
+        }
+    
+        // Wait until the RBNE flag is set
+        while (!(ptr_i2cx->STAT0 & (1 << 6)));
+    
+        // Read the data
+        buffer[i] = (uint8_t)ptr_i2cx->DATA;
+      }
+    }
+    

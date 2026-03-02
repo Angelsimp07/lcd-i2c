@@ -5,8 +5,7 @@
 
  // Define the main menu to be displayed on teraterm
  char main_menu[] = "\r\n\t\tMain_Menu\r\n\
- \t1 - dfrobot display\r\n\
- \t2 - eeprom\r\n";
+ \t1 - dfrobot tft display\r\n";
 
 
  // Define the Esc message
@@ -42,9 +41,7 @@ int main(void)
 
   switch(kb_input)
   {
-   case '1' : dfrobot_display(DFR1_1); break;
-
-   case '2' : i2c1_eeprom_write_read(); break;
+   case '1' : tft_test(); break;
 
    //case '2': spi1_follower_receives(); break;
 

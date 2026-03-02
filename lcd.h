@@ -18,7 +18,7 @@
 
 #define MOVE_CURSOR_RIGHT (0x06)
 #define MOVE_CURSOR_LEFT  (0x04)
-#define TWO_LINE_DISPLAY  (0x28)
+#define TWO_LINE_DISPLAY  (0x38)
 #define CGRAM_MASK        (0x40)
 #define DDRAM_MASK        (0x80)
 #define CMD_WRITE         (0x00)// Next bit will be a comment

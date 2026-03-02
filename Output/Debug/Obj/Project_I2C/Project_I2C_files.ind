@@ -1,3 +1,5 @@
+"Output/Debug/Obj/Project_I2C/dfrobot_tft.o"
+"Output/Debug/Obj/Project_I2C/eeprom_functions.o"
 "Output/Debug/Obj/Project_I2C/gpio_functions.o"
 "Output/Debug/Obj/Project_I2C/I2C_Functions.o"
 "Output/Debug/Obj/Project_I2C/I2C_main.o"
@@ -8,7 +10,6 @@
 "Output/Debug/Obj/Project_I2C/system_gd32f4xx.o"
 "Output/Debug/Obj/Project_I2C/systick_functions.o"
 "Output/Debug/Obj/Project_I2C/usart_functions.o"
-"Output/Debug/Obj/Project_I2C/eeprom_functions.o"
 "Output/Debug/Obj/Project_I2C/gd32f405_425_Vectors.o"
 "Output/Debug/Obj/Project_I2C/GD32F4xx_Startup.o"
 "Output/Debug/Obj/Project_I2C/SEGGER_THUMB_Startup.o"

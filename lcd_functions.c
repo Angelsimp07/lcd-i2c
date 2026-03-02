@@ -4,35 +4,64 @@
 
 void dfrobot_init(void)
 {
- delay_systick_us(100); // adds a 100us delay
+  // 1. Wait at least 15ms after power-on
+  delay_systick_us(20000);
 
- i2cx_start(ptr_i2c1);
+  // 2. Initial Function Set 1 (0x38)
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, TWO_LINE_DISPLAY);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(5000);
 
- i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  // 3. Initial Function Set 2 (0x38)
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, TWO_LINE_DISPLAY);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(100);
 
- i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  // 4. Initial Function Set 3 (0x38)
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, TWO_LINE_DISPLAY);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(100);
 
- // Two-line display
- i2cx_send_byte(ptr_i2c1, TWO_LINE_DISPLAY);
+  // 5. Display OFF
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, DISPLLAY_OFF);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(100);
 
- delay_systick_us(40);
+  // 6. Clear Display
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, CLEAR_DISPLAY);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(2000);
 
- // Display ON
- i2cx_send_byte(ptr_i2c1, DISPLAY_ON);
+  // 7. Entry Mode Set
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, MOVE_CURSOR_RIGHT);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(100);
 
- delay_systick_us(40);
-
- // Clear display
- i2cx_send_byte(ptr_i2c1, CLEAR_DISPLAY);
-
- delay_systick_us(1530);
-
- // Move cursor right
- i2cx_send_byte(ptr_i2c1, MOVE_CURSOR_RIGHT);
-
- delay_systick_us(40);
-
- i2cx_stop(ptr_i2c1);
+  // 8. Display ON
+  i2cx_start(ptr_i2c1);
+  i2cx_send_dadr(ptr_i2c1, DFR_ADDR_WRITE);
+  i2cx_send_byte(ptr_i2c1, CMD_WRITE);
+  i2cx_send_byte(ptr_i2c1, DISPLAY_ON);
+  i2cx_stop(ptr_i2c1);
+  delay_systick_us(100);
 }
 
 void i2c1_send_text_to_dfr(char*str)

@@ -15,7 +15,7 @@
 
 #define NORMAL_MODE (0x00)
 
-#define LED0_ON (0x00)
+#define LED0_ON (0x55)
 
 void pca9633_init(void);
 

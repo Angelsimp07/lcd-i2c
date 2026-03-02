@@ -1,7 +1,6 @@
-Output/Debug/Obj/Project_I2C/eeprom_functions.o: \
-  C:\Users\USER\Documents\I2C_lcd\eeprom_functions.c \
-  C:\Users\USER\Documents\I2C_lcd\eeprom.h \
-  C:\Users\USER\Documents\I2C_lcd\I2C.h \
+Output/Debug/Obj/Project_I2C/dfrobot_tft.o: \
+  C:\Users\USER\Documents\I2C_lcd\dfrobot_tft.c \
+  C:\Users\USER\Documents\I2C_lcd\dfrobot_tft.h \
   C:\Users\USER\Documents\I2C_lcd\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx.h \
   C:\Users\USER\Documents\I2C_lcd\CMSIS_5\CMSIS\Core\Include\core_cm4.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdint.h \
@@ -36,4 +35,6 @@ Output/Debug/Obj/Project_I2C/eeprom_functions.o: \
   C:\Users\USER\Documents\I2C_lcd\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_timer.h \
   C:\Users\USER\Documents\I2C_lcd\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_usart.h \
   C:\Users\USER\Documents\I2C_lcd\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_wwdgt.h \
+  C:\Users\USER\Documents\I2C_lcd\I2C.h \
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\string.h \
   C:\Users\USER\Documents\I2C_lcd\systick.h
