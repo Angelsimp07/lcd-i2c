@@ -113,6 +113,7 @@ void tft_draw_icon(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const cha
 {
   uint8_t len = strlen(path);
   uint8_t data[256]; 
+  uint8_t cmd = CMD_OF_DRAW_ICON_INTERNAL;
   
   data[0] = id;
   data[1] = (uint8_t)((x >> 8) & 0xFF);
@@ -123,14 +124,20 @@ void tft_draw_icon(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const cha
   data[6] = (uint8_t)(scale & 0xFF);
   memcpy(&data[7], path, len);
   data[7 + len] = '\0'; // Null terminator
+
+  if((len > 0) && ((path[0] == '/') || (path[0] == '\\')))
+  {
+    cmd = CMD_OF_DRAW_ICON_EXTERNAL;
+  }
   
-  tft_send_packet(CMD_OF_DRAW_ICON_INTERNAL, data, 8 + len);
+  tft_send_packet(cmd, data, 8 + len);
 }
 
 void tft_draw_gif(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const char* path)
 {
   uint8_t len = strlen(path);
   uint8_t data[256];
+  uint8_t cmd = CMD_OF_DRAW_GIF_INTERNAL;
   
   data[0] = id;
   data[1] = (uint8_t)((x >> 8) & 0xFF);
@@ -141,6 +148,11 @@ void tft_draw_gif(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const char
   data[6] = (uint8_t)(scale & 0xFF);
   memcpy(&data[7], path, len);
   data[7 + len] = '\0'; // Null terminator
+
+  if((len > 0) && ((path[0] == '/') || (path[0] == '\\')))
+  {
+    cmd = CMD_OF_DRAW_GIF_EXTERNAL;
+  }
   
-  tft_send_packet(CMD_OF_DRAW_GIF_INTERNAL, data, 8 + len);
+  tft_send_packet(cmd, data, 8 + len);
 }

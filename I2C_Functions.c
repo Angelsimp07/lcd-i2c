@@ -205,4 +205,4 @@ void i2cx_send_text(i2c_t* ptr_i2cx, const char *str)
         buffer[i] = (uint8_t)ptr_i2cx->DATA;
       }
     }
-    
+

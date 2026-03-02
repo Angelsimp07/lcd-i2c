@@ -13,6 +13,13 @@
 
 int main(void)
 {
+ // Configure PB10/PB11 for I2C1 (SCL/SDA)
+ gpiox_config(ptr_gpiob, PBEN_MASK, 10, 2, 1, 2, 4, 1);
+ gpiox_config(ptr_gpiob, PBEN_MASK, 11, 2, 1, 2, 4, 1);
+
+ // Configure I2C1 in standard mode for the TFT module
+ i2cx_config(ptr_i2c1, I2C1EN_MASK, 0, 0, SCL_SPEED_STD);
+
  // Configure PA2 in alternate function mode
  gpiox_config(ptr_gpioa, PAEN_MASK, 2, 2, 0, 0, 7, 0);
 
