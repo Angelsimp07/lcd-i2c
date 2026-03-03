@@ -6,6 +6,7 @@
 #include <string.h>
 
 #define TFT_ADDR_WRITE      (0x58) // 0x2C << 1
+#define TFT_FRAME_ADDR      (0x2C)
 
 // Command IDs
 #define CMD_SET_BACKGROUND_COLOR      0x19
@@ -45,6 +46,8 @@
 void tft_send_packet(uint8_t cmd, uint8_t* data, uint8_t len);
 
 void tft_set_background_color(uint8_t r, uint8_t g, uint8_t b);
+
+void tft_set_background_img(uint8_t location, const char* path);
 
 void tft_draw_text(uint8_t id, uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b, const char* str);
 

@@ -4,7 +4,7 @@
 void tft_send_packet(uint8_t cmd, uint8_t* data, uint8_t len)
 {
   uint8_t checksum = 0;
-  uint8_t packet_len = len + 1; // CMD + DATA
+  uint8_t packet_len = len + 1;
 
   i2cx_start(ptr_i2c1);
   i2cx_send_dadr(ptr_i2c1, TFT_ADDR_WRITE);
@@ -35,6 +35,18 @@ void tft_set_background_color(uint8_t r, uint8_t g, uint8_t b)
 {
   uint8_t data[3] = {r, g, b};
   tft_send_packet(CMD_SET_BACKGROUND_COLOR, data, 3);
+}
+
+void tft_set_background_img(uint8_t location, const char* path)
+{
+  uint8_t len = strlen(path);
+  uint8_t data[256];
+
+  data[0] = location;
+  memcpy(&data[1], path, len);
+  data[1 + len] = '\0';
+
+  tft_send_packet(CMD_SET_BACKGROUND_IMG, data, 2 + len);
 }
 
 void tft_draw_text(uint8_t id, uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b, const char* str)
@@ -113,24 +125,19 @@ void tft_draw_icon(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const cha
 {
   uint8_t len = strlen(path);
   uint8_t data[256]; 
-  uint8_t cmd = CMD_OF_DRAW_ICON_INTERNAL;
   
   data[0] = id;
-  data[1] = (uint8_t)((x >> 8) & 0xFF);
-  data[2] = (uint8_t)(x & 0xFF);
-  data[3] = (uint8_t)((y >> 8) & 0xFF);
-  data[4] = (uint8_t)(y & 0xFF);
-  data[5] = (uint8_t)((scale >> 8) & 0xFF);
-  data[6] = (uint8_t)(scale & 0xFF);
+  data[1] = (uint8_t)((scale >> 8) & 0xFF);
+  data[2] = (uint8_t)(scale & 0xFF);
+  data[3] = (uint8_t)((x >> 8) & 0xFF);
+  data[4] = (uint8_t)(x & 0xFF);
+  data[5] = (uint8_t)((y >> 8) & 0xFF);
+  data[6] = (uint8_t)(y & 0xFF);
   memcpy(&data[7], path, len);
   data[7 + len] = '\0'; // Null terminator
 
-  if((len > 0) && ((path[0] == '/') || (path[0] == '\\')))
-  {
-    cmd = CMD_OF_DRAW_ICON_EXTERNAL;
-  }
-  
-  tft_send_packet(cmd, data, 8 + len);
+  // For DFR0997, string paths refer to files stored on the display's USB storage.
+  tft_send_packet(CMD_OF_DRAW_ICON_EXTERNAL, data, 8 + len);
 }
 
 void tft_draw_gif(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const char* path)

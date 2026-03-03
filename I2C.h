@@ -56,6 +56,8 @@ int dfrobot_display(uint32_t dfr_version);
 
 int tft_test(void);
 
+int tft_background_color_test(void);
+
 int i2c1_eeprom_write_read(void);
 
 #endif
