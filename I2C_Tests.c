@@ -313,6 +313,105 @@ int tft_background_color_test(void)
   return 0;
 }
 
+static void weather_station_draw_ui(void)
+{
+  tft_set_background_color(0, 0, 50); // Deep blue background
+
+  // Title
+  tft_draw_rect(60, 10, 10, 460, 40, 255, 255, 255);
+  tft_draw_text(61, 80, 20, 0, 0, 0, "ENS161 WEATHER STATION");
+
+  // Labels
+  tft_draw_text(62, 30, 80, 200, 200, 200, "AQI Index:");
+  tft_draw_text(63, 30, 130, 200, 200, 200, "TVOC (ppb):");
+  tft_draw_text(64, 30, 180, 200, 200, 200, "eCO2 (ppm):");
+
+  // Units/Status Label
+  tft_draw_text(65, 30, 230, 200, 200, 200, "Status:");
+
+  // Compass for AQI
+  tft_draw_compass(TFT_ID_WIDGET_COMPASS, 300, 200, 150);
+  tft_draw_text(66, 310, 290, 255, 255, 255, "AQI");
+}
+
+static void weather_station_update_data(uint8_t aqi, uint16_t tvoc, uint16_t eco2, uint8_t status)
+{
+  char buf[32];
+
+  // Delete old values
+  tft_delete_obj(70);
+  tft_delete_obj(71);
+  tft_delete_obj(72);
+  tft_delete_obj(73);
+
+  // AQI
+  snprintf(buf, sizeof(buf), "%u", aqi);
+  tft_draw_text(70, 180, 80, 255, 255, 255, buf);
+
+  // TVOC
+  snprintf(buf, sizeof(buf), "%u", tvoc);
+  tft_draw_text(71, 180, 130, 255, 255, 255, buf);
+
+  // eCO2
+  snprintf(buf, sizeof(buf), "%u", eco2);
+  tft_draw_text(72, 180, 180, 255, 255, 255, buf);
+
+  // Status
+  snprintf(buf, sizeof(buf), "0x%02X", status);
+  tft_draw_text(73, 180, 230, 255, 255, 255, buf);
+
+  // Compass Update
+  if (aqi > 5) aqi = 5;
+  uint16_t angle = (uint16_t)(aqi * 720); // 0-3600 scale
+  tft_set_compass_value(TFT_ID_WIDGET_COMPASS, angle);
+}
+
+int weather_station_example(void)
+{
+  uint8_t aqi, status_reg;
+  uint16_t tvoc, eco2;
+  uint8_t ens_addr = 0x53; // Default HIGH address
+  int res;
+
+  usartx_send_text(ptr_usart1, "\r\nStarting Weather Station Example...\r\n");
+
+  weather_station_draw_ui();
+
+  // Try to find the sensor
+  res = ens161_read_reg(0x53, ENS161_REG_PART_ID_L, &status_reg);
+  if (res != 0) {
+    res = ens161_read_reg(0x52, ENS161_REG_PART_ID_L, &status_reg);
+    if (res == 0) ens_addr = 0x52;
+    else {
+      usartx_send_text(ptr_usart1, "ENS161 not found!\r\n");
+      return -1;
+    }
+  }
+
+  // Initialize Standard mode
+  ens161_write_reg(ens_addr, ENS161_REG_OPMODE, ENS161_OPMODE_STD);
+  delay_systick_us(10000);
+
+  while(1)
+  {
+    ens161_read_reg(ens_addr, ENS161_REG_STATUS, &status_reg);
+    ens161_read_reg(ens_addr, ENS161_REG_DATA_AQI, &aqi);
+    ens161_read_u16(ens_addr, ENS161_REG_DATA_TVOC, &tvoc);
+    ens161_read_u16(ens_addr, ENS161_REG_DATA_ECO2, &eco2);
+
+    weather_station_update_data(aqi, tvoc, eco2, status_reg);
+
+    delay_systick_us(1000000); // 1s update
+
+    if ((g_usart1_rx_count > 0) && (g_usart1_rx_arr[g_usart1_rx_count - 1] == 0x1B))
+    {
+      break;
+    }
+  }
+
+  return 0;
+}
+
 int ens161_config_test(void)
 {
   char prompt[] = "\r\n\tConfiguring ENS161-BGT and streaming STATUS/AQI/TVOC/eCO2 (Esc to stop).\r\n";

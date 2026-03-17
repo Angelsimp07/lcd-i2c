@@ -1,6 +1,6 @@
-Output/Debug/Obj/Project_I2C/usart_functions.o: \
-  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\usart_functions.c \
-  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\usart.h \
+Output/Debug/Obj/Project_I2C/ens161_functions.o: \
+  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\ens161_functions.c \
+  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\ens161.h \
   C:\Users\USER\Documents\i2c_lcd\lcd-i2c\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx.h \
   C:\Users\USER\Documents\i2c_lcd\lcd-i2c\CMSIS_5\CMSIS\Core\Include\core_cm4.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdint.h \
@@ -35,5 +35,5 @@ Output/Debug/Obj/Project_I2C/usart_functions.o: \
   C:\Users\USER\Documents\i2c_lcd\lcd-i2c\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_timer.h \
   C:\Users\USER\Documents\i2c_lcd\lcd-i2c\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_usart.h \
   C:\Users\USER\Documents\i2c_lcd\lcd-i2c\GD32F4xx\Device\Include\Device\F4XX\Include\gd32f4xx_wwdgt.h \
-  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\rcu.h \
-  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\string.h
+  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\I2C.h \
+  C:\Users\USER\Documents\i2c_lcd\lcd-i2c\systick.h

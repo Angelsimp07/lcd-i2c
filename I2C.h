@@ -62,4 +62,6 @@ int i2c1_eeprom_write_read(void);
 
 int ens161_config_test(void);
 
+int weather_station_example(void);
+
 #endif
