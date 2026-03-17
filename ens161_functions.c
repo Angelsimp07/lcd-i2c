@@ -3,42 +3,42 @@
 
 void ens161_write_reg(uint8_t reg, uint8_t val)
 {
-  i2cx_start(ptr_i2c1);
-  i2cx_send_dadr(ptr_i2c1, ENS161_I2C_ADDR);
-  i2cx_send_byte(ptr_i2c1, reg);
-  i2cx_send_byte(ptr_i2c1, val);
-  i2cx_stop(ptr_i2c1);
+  i2cx_start(ptr_i2c2);
+  i2cx_send_dadr(ptr_i2c2, ENS161_I2C_ADDR);
+  i2cx_send_byte(ptr_i2c2, reg);
+  i2cx_send_byte(ptr_i2c2, val);
+  i2cx_stop(ptr_i2c2);
 }
 
 uint8_t ens161_read_reg(uint8_t reg)
 {
   uint8_t val;
-  i2cx_start(ptr_i2c1);
-  i2cx_send_dadr(ptr_i2c1, ENS161_I2C_ADDR);
-  i2cx_send_byte(ptr_i2c1, reg);
-  i2cx_stop(ptr_i2c1);
+  i2cx_start(ptr_i2c2);
+  i2cx_send_dadr(ptr_i2c2, ENS161_I2C_ADDR);
+  i2cx_send_byte(ptr_i2c2, reg);
+  i2cx_stop(ptr_i2c2);
 
   delay_systick_us(100);
 
-  i2cx_start(ptr_i2c1);
-  i2cx_send_dadr(ptr_i2c1, ENS161_I2C_ADDR | 1);
-  val = i2cx_read_byte(ptr_i2c1);
+  i2cx_start(ptr_i2c2);
+  i2cx_send_dadr(ptr_i2c2, ENS161_I2C_ADDR | 1);
+  val = i2cx_read_byte(ptr_i2c2);
   // i2cx_read_byte already sends the STOP condition internally!
   return val;
 }
 
 void ens161_read_multi(uint8_t reg, uint8_t* buffer, uint32_t len)
 {
-  i2cx_start(ptr_i2c1);
-  i2cx_send_dadr(ptr_i2c1, ENS161_I2C_ADDR);
-  i2cx_send_byte(ptr_i2c1, reg);
-  i2cx_stop(ptr_i2c1);
+  i2cx_start(ptr_i2c2);
+  i2cx_send_dadr(ptr_i2c2, ENS161_I2C_ADDR);
+  i2cx_send_byte(ptr_i2c2, reg);
+  i2cx_stop(ptr_i2c2);
 
   delay_systick_us(100);
 
-  i2cx_start(ptr_i2c1);
-  i2cx_send_dadr(ptr_i2c1, ENS161_I2C_ADDR | 1);
-  i2cx_read_bytes(ptr_i2c1, buffer, len);
+  i2cx_start(ptr_i2c2);
+  i2cx_send_dadr(ptr_i2c2, ENS161_I2C_ADDR | 1);
+  i2cx_read_bytes(ptr_i2c2, buffer, len);
   // i2cx_read_bytes already sends the STOP condition on the last byte!
 }
 

@@ -57,39 +57,39 @@ static int ens161_wait_clear(volatile uint32_t *reg, uint32_t mask, uint32_t tim
 
 static void ens161_force_stop(void)
 {
-  ptr_i2c1->CTL0 |= (1U << 9);
-  (void)ens161_wait_clear(&ptr_i2c1->CTL0, (1U << 9), ENS161_I2C_TIMEOUT_CYCLES);
+  ptr_i2c2->CTL0 |= (1U << 9);
+  (void)ens161_wait_clear(&ptr_i2c2->CTL0, (1U << 9), ENS161_I2C_TIMEOUT_CYCLES);
 }
 
 static int ens161_send_addr(uint8_t dadr)
 {
-  ptr_i2c1->DATA = dadr;
+  ptr_i2c2->DATA = dadr;
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     return -1;
   }
 
-  (void)ptr_i2c1->STAT0;
-  (void)ptr_i2c1->STAT1;
+  (void)ptr_i2c2->STAT0;
+  (void)ptr_i2c2->STAT1;
   return 0;
 }
 
 static int ens161_write_reg(uint8_t addr_7bit, uint8_t reg_addr, uint8_t value)
 {
-  if (ens161_wait_clear(&ptr_i2c1->STAT1, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_clear(&ptr_i2c2->STAT1, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     return -1;
   }
 
-  ptr_i2c1->CTL0 |= (1U << 8);
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  ptr_i2c2->CTL0 |= (1U << 8);
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -2;
   }
 
-  (void)ptr_i2c1->STAT0;
+  (void)ptr_i2c2->STAT0;
 
   if (ens161_send_addr((uint8_t)(addr_7bit << 1)) != 0)
   {
@@ -97,21 +97,21 @@ static int ens161_write_reg(uint8_t addr_7bit, uint8_t reg_addr, uint8_t value)
     return -3;
   }
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -4;
   }
-  ptr_i2c1->DATA = reg_addr;
+  ptr_i2c2->DATA = reg_addr;
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -5;
   }
-  ptr_i2c1->DATA = value;
+  ptr_i2c2->DATA = value;
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 2), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 2), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -6;
@@ -128,19 +128,19 @@ static int ens161_read_reg(uint8_t addr_7bit, uint8_t reg_addr, uint8_t *value)
     return -20;
   }
 
-  if (ens161_wait_clear(&ptr_i2c1->STAT1, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_clear(&ptr_i2c2->STAT1, (1U << 1), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     return -1;
   }
 
-  ptr_i2c1->CTL0 |= (1U << 8);
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  ptr_i2c2->CTL0 |= (1U << 8);
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -2;
   }
 
-  (void)ptr_i2c1->STAT0;
+  (void)ptr_i2c2->STAT0;
 
   if (ens161_send_addr((uint8_t)(addr_7bit << 1)) != 0)
   {
@@ -148,27 +148,27 @@ static int ens161_read_reg(uint8_t addr_7bit, uint8_t reg_addr, uint8_t *value)
     return -3;
   }
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -4;
   }
-  ptr_i2c1->DATA = reg_addr;
+  ptr_i2c2->DATA = reg_addr;
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 7), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -5;
   }
 
-  ptr_i2c1->CTL0 |= (1U << 8);
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  ptr_i2c2->CTL0 |= (1U << 8);
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 0), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
     return -6;
   }
 
-  (void)ptr_i2c1->STAT0;
+  (void)ptr_i2c2->STAT0;
 
   if (ens161_send_addr((uint8_t)((addr_7bit << 1) | 0x01U)) != 0)
   {
@@ -176,18 +176,18 @@ static int ens161_read_reg(uint8_t addr_7bit, uint8_t reg_addr, uint8_t *value)
     return -7;
   }
 
-  ptr_i2c1->CTL0 &= ~(1U << 10);
-  ptr_i2c1->CTL0 |= (1U << 9);
+  ptr_i2c2->CTL0 &= ~(1U << 10);
+  ptr_i2c2->CTL0 |= (1U << 9);
 
-  if (ens161_wait_set(&ptr_i2c1->STAT0, (1U << 6), ENS161_I2C_TIMEOUT_CYCLES) != 0)
+  if (ens161_wait_set(&ptr_i2c2->STAT0, (1U << 6), ENS161_I2C_TIMEOUT_CYCLES) != 0)
   {
     ens161_force_stop();
-    ptr_i2c1->CTL0 |= (1U << 10);
+    ptr_i2c2->CTL0 |= (1U << 10);
     return -8;
   }
 
-  *value = (uint8_t)ptr_i2c1->DATA;
-  ptr_i2c1->CTL0 |= (1U << 10);
+  *value = (uint8_t)ptr_i2c2->DATA;
+  ptr_i2c2->CTL0 |= (1U << 10);
 
   return 0;
 }

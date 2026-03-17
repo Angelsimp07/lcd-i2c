@@ -20,8 +20,15 @@ int main(void)
  gpiox_config(ptr_gpiob, PBEN_MASK, 10, 2, 1, 3, 4, 1);
  gpiox_config(ptr_gpiob, PBEN_MASK, 11, 2, 1, 3, 4, 1);
 
+ // Configure PA8 (SCL) and PC9 (SDA) for I2C2 - AF4
+ gpiox_config(ptr_gpioa, PAEN_MASK, 8, 2, 1, 3, 4, 1);
+ gpiox_config(ptr_gpioc, PCEN_MASK, 9, 2, 1, 3, 4, 1);
+
  // Match the original TFT test timing: fast mode with the alternate duty setting.
  i2cx_config(ptr_i2c1, I2C1EN_MASK, 0, 1, SCL_SPEED_FAST);
+
+ // Initialize I2C2 for Sensor
+ i2cx_config(ptr_i2c2, I2C2EN_MASK, 0, 1, SCL_SPEED_FAST);
 
  // Configure PA2 in alternate function mode
  gpiox_config(ptr_gpioa, PAEN_MASK, 2, 2, 0, 0, 7, 0);

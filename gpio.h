@@ -6,10 +6,12 @@
 #define GPIOC_BASE_ADDR  (0x40020800)
 #define GPIOA_BASE_ADDR  (0x40020000)
 #define GPIOB_BASE_ADDR  (0x40020400)
+#define GPIOF_BASE_ADDR  (0x40021400)
 
 #define PCEN_MASK  (1 << 2)
 #define PAEN_MASK  (1 << 0)
 #define PBEN_MASK  (1 << 1)
+#define PFEN_MASK  (1 << 5)
 
 // Define a structure of GPIOx registers
 typedef struct
@@ -34,6 +36,8 @@ typedef struct
 #define ptr_gpioa ((gpio_t*)GPIOA_BASE_ADDR)
 
 #define ptr_gpiob ((gpio_t*)GPIOB_BASE_ADDR)
+
+#define ptr_gpiof ((gpio_t*)GPIOF_BASE_ADDR)
 
 // Define a structure of SYSCFG registers
 typedef struct

@@ -21,10 +21,13 @@ typedef struct // found in user manual 20.4.11
 
 // Define the base address
 #define I2C1_BASE_ADDR (0x40005800)
+#define I2C2_BASE_ADDR (0x40005C00)
 
 #define ptr_i2c1 ((i2c_t*)I2C1_BASE_ADDR) // making a pointer back to the struct and address
+#define ptr_i2c2 ((i2c_t*)I2C2_BASE_ADDR)
 
 #define I2C1EN_MASK (1 << 22) // This ca be found in user manual 4.3.13
+#define I2C2EN_MASK (1 << 23)
 
 #define APB1_FREQ      (42000000)
 #define SCL_SPEED_STD  (0)
