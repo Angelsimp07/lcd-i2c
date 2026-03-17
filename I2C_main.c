@@ -6,7 +6,8 @@
 // Define the main menu to be displayed on teraterm
 char main_menu[] = "\r\n\t\tMain_Menu\r\n\
 \t1 - run IMG_4346.png test\r\n\
-\t2 - run background color test\r\n";
+\t2 - run background color test\r\n\
+\t3 - run ENS161-BGT value stream test\r\n";
 
 
  // Define the Esc message
@@ -51,6 +52,7 @@ int main(void)
   {
    case '1' : tft_test(); break;
    case '2' : tft_background_color_test(); break;
+   case '3' : ens161_config_test(); break;
 
    //case '2': spi1_follower_receives(); break;
 

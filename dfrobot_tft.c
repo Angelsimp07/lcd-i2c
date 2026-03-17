@@ -163,3 +163,29 @@ void tft_draw_gif(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const char
   
   tft_send_packet(cmd, data, 8 + len);
 }
+
+void tft_draw_compass(uint8_t id, uint16_t x, uint16_t y, uint16_t diameter)
+{
+  uint8_t data[7];
+
+  data[0] = id;
+  data[1] = (uint8_t)((x >> 8) & 0xFF);
+  data[2] = (uint8_t)(x & 0xFF);
+  data[3] = (uint8_t)((y >> 8) & 0xFF);
+  data[4] = (uint8_t)(y & 0xFF);
+  data[5] = (uint8_t)((diameter >> 8) & 0xFF);
+  data[6] = (uint8_t)(diameter & 0xFF);
+
+  tft_send_packet(CMD_OF_DRAW_COMPASS, data, 7);
+}
+
+void tft_set_compass_value(uint8_t id, uint16_t scale)
+{
+  uint8_t data[3];
+
+  data[0] = id;
+  data[1] = (uint8_t)((scale >> 8) & 0xFF);
+  data[2] = (uint8_t)(scale & 0xFF);
+
+  tft_send_packet(CMD_OF_DRAW_COMPASS_VALUE, data, 3);
+}

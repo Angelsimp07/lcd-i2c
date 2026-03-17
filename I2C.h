@@ -60,4 +60,6 @@ int tft_background_color_test(void);
 
 int i2c1_eeprom_write_read(void);
 
+int ens161_config_test(void);
+
 #endif

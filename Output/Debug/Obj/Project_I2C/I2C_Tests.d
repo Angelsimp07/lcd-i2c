@@ -42,4 +42,5 @@ Output/Debug/Obj/Project_I2C/I2C_Tests.o: \
   C:\Users\thein\OneDrive\Documents\i2c_lcd\lcd-i2c\led_driver.h \
   C:\Users\thein\OneDrive\Documents\i2c_lcd\lcd-i2c\eeprom.h \
   C:\Users\thein\OneDrive\Documents\i2c_lcd\lcd-i2c\systick.h \
-  C:\Users\thein\OneDrive\Documents\i2c_lcd\lcd-i2c\dfrobot_tft.h
+  C:\Users\thein\OneDrive\Documents\i2c_lcd\lcd-i2c\dfrobot_tft.h \
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdio.h

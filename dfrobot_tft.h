@@ -61,4 +61,8 @@ void tft_draw_icon(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const cha
 
 void tft_draw_gif(uint8_t id, uint16_t x, uint16_t y, uint16_t scale, const char* path);
 
+void tft_draw_compass(uint8_t id, uint16_t x, uint16_t y, uint16_t diameter);
+
+void tft_set_compass_value(uint8_t id, uint16_t scale);
+
 #endif
